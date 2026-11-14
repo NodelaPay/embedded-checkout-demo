@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { ShopProvider } from "@/modules/storefront/shop-context";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nodela Embedded Checkout Demo",
-  description: "Embedded checkout demo powered by Nodela.",
+  title: "Trümung — Fashion Store",
+  description: "Rare limited edition pieces from New York and Los Angeles.",
 };
 
 export default function RootLayout({
@@ -12,7 +13,9 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ShopProvider>{children}</ShopProvider>
+      </body>
     </html>
   );
 }
