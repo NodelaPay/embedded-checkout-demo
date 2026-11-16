@@ -9,9 +9,9 @@ import { OrderRepositoryFactory } from "./repository.factory";
 
 export interface OrdersServiceContract {
   list(guestId: string): Promise<readonly OrderDto[]>;
-  quote(
-    guestId: string,
-  ): Promise<{
+  get(guestId: string, orderId: string): Promise<OrderDto | undefined>;
+  markPaid(orderId: string): Promise<void>;
+  quote(guestId: string): Promise<{
     items: readonly OrderItemDto[];
     subtotal: number;
     total: number;
@@ -27,6 +27,12 @@ export class OrdersService implements OrdersServiceContract {
   ) {}
   list(guestId: string) {
     return this.repository.list(guestId);
+  }
+  get(guestId: string, orderId: string) {
+    return this.repository.get(guestId, orderId);
+  }
+  markPaid(orderId: string) {
+    return this.repository.markPaid(orderId);
   }
   async quote(guestId: string) {
     const cartItems = await this.cart.list(guestId);

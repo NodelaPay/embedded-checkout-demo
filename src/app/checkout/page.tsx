@@ -4,8 +4,13 @@ export default function CheckoutPage() {
   return (
     <>
       <Header />
-      <CheckoutView />
+      <Suspense
+        fallback={<main className="checkout-route">Loading checkout…</main>}
+      >
+        <CheckoutView />
+      </Suspense>
       <Footer />
     </>
   );
 }
+import { Suspense } from "react";

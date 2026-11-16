@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { EditorialImage, ProductCard } from "@/modules/storefront/components";
 import { images } from "@/modules/storefront/data";
 import { useShop } from "@/modules/storefront/shop-context";
@@ -243,6 +244,14 @@ export function AccountView() {
                 >
                   VIEW
                 </button>
+                {order.status !== "paid" && (
+                  <Link
+                    className="text-link"
+                    href={`/checkout?orderId=${order.id}`}
+                  >
+                    PAY
+                  </Link>
+                )}
               </div>
             ))}
             {orders.length === 0 && <p>No orders yet.</p>}

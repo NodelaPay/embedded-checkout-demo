@@ -7,7 +7,7 @@ export interface OrderItemDto {
 }
 export interface OrderDto {
   id: string;
-  status: "awaiting_payment";
+  status: "awaiting_payment" | "paid";
   subtotal: number;
   total: number;
   currency: "USD";

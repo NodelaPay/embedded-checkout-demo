@@ -24,6 +24,7 @@ const paymentSchema = z.object({
   NODELA_API_URL: z.url().default("https://api.nodela.co"),
   APP_BASE_URL: z.url(),
   NODELA_WEBHOOK_SECRET: z.string().min(1).optional(),
+  NODELA_DEBUG: z.enum(["true", "false"]).default("false"),
 });
 
 export type DatabaseEnvironment = z.infer<typeof databaseSchema>;

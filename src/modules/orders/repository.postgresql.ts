@@ -9,7 +9,7 @@ type Row = typeof ordersTable.$inferSelect;
 function toDto(row: Row): OrderDto {
   return {
     id: row.id,
-    status: "awaiting_payment",
+    status: row.status === "paid" ? "paid" : "awaiting_payment",
     subtotal: row.subtotal,
     total: row.total,
     currency: "USD",
@@ -27,6 +27,20 @@ export class PostgreSqlOrderRepository implements OrderRepository {
       .where(eq(ordersTable.guestId, guestId))
       .orderBy(desc(ordersTable.createdAt));
     return rows.map(toDto);
+  }
+  async get(guestId: string, orderId: string) {
+    const [row] = await this.database
+      .select()
+      .from(ordersTable)
+      .where(and(eq(ordersTable.guestId, guestId), eq(ordersTable.id, orderId)))
+      .limit(1);
+    return row ? toDto(row) : undefined;
+  }
+  async markPaid(orderId: string) {
+    await this.database
+      .update(ordersTable)
+      .set({ status: "paid" })
+      .where(eq(ordersTable.id, orderId));
   }
   async getByKey(guestId: string, key: string) {
     const [row] = await this.database
